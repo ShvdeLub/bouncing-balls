@@ -75,7 +75,7 @@ EvilCircle.prototype.setControls = function () {
   let _this = this;
   window.onkeydown = function (e) {
     if (e.keyCode === 81) {
-      //keyright
+      //q
       _this.x -= _this.velX;
     } else if (e.keyCode === 68) {
       // d
@@ -87,19 +87,39 @@ EvilCircle.prototype.setControls = function () {
       //s
       _this.y += _this.velY;
     }
+
+    else if(e.keycode === 81 && e.keycode === 90) {
+      _this.x -= _this.velX;
+      _this.y -= _this.velY;      
+    }
+
+    else if(e.keycode === 68 && e.keycode === 90) {
+      _this.x += _this.velX;
+      _this.y -= _this.velY;      
+    }
+    else if(e.keycode === 68 && e.keycode === 83) {
+      _this.x += _this.velX;
+      _this.y += _this.velY;      
+    }
+    else if(e.keycode === 81 && e.keycode === 83) {
+      _this.x -= _this.velX;
+      _this.y += _this.velY;      
+    }
+
+
   };
 };
 
 EvilCircle.prototype.collisionDetect = function () {
-  for (let i = 0; i < balls.length; i++) {
-    if (balls[i].exists === true) {
-      const dx = this.x - balls[i].x;
-      const dy = this.y - balls[i].y;
+  for (let j = 0; j < balls.length; j++) {
+    if (balls[j].exists === true) {
+      const dx = this.x - balls[j].x;
+      const dy = this.y - balls[j].y;
       const distance = Math.sqrt(dx * dx + dy * dy);
 
-      if (distance < this.size + balls[i].size) {
-        balls[i].exists = false;
-        delete balls[i]
+      if (distance < this.size + balls[j].size) {
+        balls[j].exists = this.exists = false;
+        //delete balls[i]
         counter += 1;
       }
     }
@@ -135,14 +155,14 @@ Ball.prototype.update = function () {
 };
 
 Ball.prototype.collisionDetect = function () {
-  for (let i = 0; i < balls.length; i++) {
-    if (!(this === balls[i])) {
-      const dx = this.x - balls[i].x;
-      const dy = this.y - balls[i].y;
+  for (let j = 0; j < balls.length; j++) {
+    if (!(this === balls[j])) {
+      const dx = this.x - balls[j].x;
+      const dy = this.y - balls[j].y;
       const distance = Math.sqrt(dx * dx + dy * dy);
 
-      if (distance < this.size + balls[i].size) {
-        balls[i].color = this.color =
+      if (distance < this.size + balls[j].size) {
+        balls[j].color = this.color =
           "rgb(" +
           random(0, 255) +
           "," +
